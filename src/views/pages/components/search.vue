@@ -141,6 +141,13 @@ export default {
     },
     onClear() {
       this.$refs.form.reset()
+      this.form = {
+        keywords: '',
+        startTime: null,
+        endTime: null,
+        tags: [],
+        status: []
+      }
     }
   }
 }

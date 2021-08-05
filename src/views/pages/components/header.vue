@@ -55,7 +55,7 @@ export default {
         keywords: '',
         startTime: null,
         endTime: null,
-        tags: [],
+        labels: [],
         status: []
       }
     }
@@ -79,12 +79,18 @@ export default {
       this.isSearchFocus = false
     },
     onReset() {
-      this.form.keywords = ''
+      this.form = {
+        keywords: '',
+        startTime: null,
+        endTime: null,
+        tags: [],
+        status: []
+      }
       this.resetSearch()
     },
     include() {
       const selectDropdown = document.querySelector('.v-menu__content')
-      const dialog = document.querySelector('.v-dialog__content')
+      const dialog = document.querySelector('.v-dialog__content--active')
 
       return [
         document.querySelector('.included'),

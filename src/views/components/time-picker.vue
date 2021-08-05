@@ -57,6 +57,12 @@ export default {
     placeholder: {
       type: String,
       default: 'Select a time'
+    },
+    value: String
+  },
+  watch: {
+    value(val) {
+      this.selectedTime = val
     }
   },
   computed: {
