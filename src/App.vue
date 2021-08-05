@@ -1,5 +1,6 @@
 <template>
   <v-app id="app">
+    <router-view name="dialog"></router-view>
     <router-view />
   </v-app>
 </template>

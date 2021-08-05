@@ -1,9 +1,15 @@
 import Constants from '@/config/constants'
 
-export const storeItem = item => {
+/**
+ *
+ * @param {String} key
+ * @param item
+ * @returns {Promise}
+ */
+export const storeItem = (key, item) => {
   return new Promise((resolve, reject) => {
     try {
-      localStorage.setItem(Buffer.from(item), 'base64')
+      localStorage.setItem(key, JSON.stringify(item))
       resolve()
     } catch (error) {
       reject(error)
@@ -11,6 +17,11 @@ export const storeItem = item => {
   })
 }
 
+/**
+ *
+ * @param {String} key
+ * @returns {Promise}
+ */
 export const getItem = key => {
   return new Promise((resolve, reject) => {
     if (!Object.values(Constants.LOCAL_STORAGE).includes(key)) {
@@ -18,7 +29,12 @@ export const getItem = key => {
     }
 
     try {
-      localStorage.getItem(key)?.toString('base64')
+      const item = JSON.parse(localStorage.getItem(key))
+      if (item) {
+        resolve(item)
+      } else {
+        reject()
+      }
     } catch (error) {
       reject(error)
     }

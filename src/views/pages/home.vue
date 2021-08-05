@@ -1,15 +1,36 @@
 <template>
-  <Header />
+  <v-container fluid class="pa-0">
+    <Header />
+    <Progress />
+    <v-row class="px-12 py-12 justify-space-between">
+      <Board :type="status" v-for="status of statusList" :key="status" />
+      <TaskDetail />
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Header from '@/views/components/header'
+import Header from '@/views/pages/components/header'
+import Board from '@/views/pages/components/board'
+import TaskDetail from '@/views/pages/components/task-detail'
+import Progress from '@/views/pages/components/progress'
+import Constants from '@/config/constants'
 
 export default {
-  components: { Header },
+  components: { Header, Board, TaskDetail, Progress },
+  data() {
+    return {
+      Constants
+    }
+  },
   mounted() {
     this.loadTask()
+  },
+  computed: {
+    statusList() {
+      return Object.values(Constants.TASK_STATUS)
+    }
   },
   methods: {
     ...mapActions(['loadTask'])
@@ -17,4 +38,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.board {
+  &__wrapper {
+    display: flex;
+    flex: 4;
+  }
+}
+</style>

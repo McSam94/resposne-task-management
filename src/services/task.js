@@ -1,9 +1,11 @@
 import Constants from '@/config/constants'
 import { storeItem, getItem } from '@/utils/local'
 
+const KEY = Constants.LOCAL_STORAGE.TASK_STORAGE
+
 export const getTasks = async () => {
   try {
-    return await JSON.parse(getItem(Constants.LOCAL_STORAGE.TASK_STORAGE))
+    return await getItem(KEY)
   } catch (error) {
     return []
   }
@@ -11,9 +13,10 @@ export const getTasks = async () => {
 
 export const getTask = async id => {
   try {
-    return await JSON.parse(
-      getItem(Constants.LOCAL_STORAGE.TASK_STORAGE)
-    )?.find(item => item?.id === id)
+    const task = (await getItem(Constants.LOCAL_STORAGE.TASK_STORAGE))?.find(
+      item => item?.id === id
+    )
+    return task
   } catch (error) {
     return null
   }
@@ -21,9 +24,9 @@ export const getTask = async id => {
 
 export const appendTask = async item => {
   try {
-    const tasks = getTasks()
+    const tasks = (await getTasks()) ?? []
 
-    await storeItem([...tasks, item])
+    await storeItem(KEY, [...tasks, item])
   } catch (error) {
     console.error(error)
   }
@@ -31,9 +34,32 @@ export const appendTask = async item => {
 
 export const editTask = async item => {
   try {
-    const tasks = getTasks()
+    const tasks = await getTasks()
 
-    await storeItem(tasks?.map(task => (task?.id === item?.id ? item : task)))
+    await storeItem(
+      KEY,
+      tasks?.map(task => (task?.id === item?.id ? item : task))
+    )
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const appendComment = async (id, comment) => {
+  try {
+    const tasks = await getTasks()
+
+    await storeItem(
+      KEY,
+      tasks?.map(task =>
+        task?.id === id
+          ? {
+              ...task,
+              comments: [comment, ...task.comments]
+            }
+          : task
+      )
+    )
   } catch (error) {
     console.error(error)
   }
@@ -41,9 +67,28 @@ export const editTask = async item => {
 
 export const removeTask = async item => {
   try {
-    const tasks = getTasks()
+    const tasks = await getTasks()
 
-    await storeItem([...tasks?.filter(task => task?.id !== item?.id)])
+    await storeItem(KEY, [...tasks?.filter(task => task?.id !== item?.id)])
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const editStatus = async (id, status) => {
+  try {
+    const tasks = await getTasks()
+
+    await storeItem(KEY, [
+      ...tasks?.map(task =>
+        task?.id === id
+          ? {
+              ...task,
+              status
+            }
+          : task
+      )
+    ])
   } catch (error) {
     console.error(error)
   }
