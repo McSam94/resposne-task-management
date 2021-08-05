@@ -85,9 +85,10 @@ export default {
   [DELETE_TASK.REQUEST]: state => {
     state.isDeletingTask = true
   },
-  [DELETE_TASK.SUCCESS]: state => {
+  [DELETE_TASK.SUCCESS]: (state, payload) => {
     state.isDeletingTask = false
     state.hasDeletedTask = true
+    state.tasks = [...state.tasks?.filter(task => task.id !== payload?.id)]
   },
   [DELETE_TASK.FAILED]: (state, payload) => {
     state.isDeletingTask = false

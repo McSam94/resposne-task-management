@@ -65,11 +65,11 @@ export const appendComment = async (id, comment) => {
   }
 }
 
-export const removeTask = async item => {
+export const removeTask = async id => {
   try {
     const tasks = await getTasks()
 
-    await storeItem(KEY, [...tasks?.filter(task => task?.id !== item?.id)])
+    await storeItem(KEY, [...tasks?.filter(task => task?.id !== id)])
   } catch (error) {
     console.error(error)
   }

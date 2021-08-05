@@ -81,6 +81,7 @@ export default {
   &__image {
     width: 100%;
     max-height: 15rem;
+    object-fit: cover;
   }
   &__card {
     cursor: pointer;

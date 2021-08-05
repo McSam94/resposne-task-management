@@ -87,7 +87,7 @@ const deleteTask = async ({ commit }, payload) => {
 
     await removeTask(payload?.id)
 
-    commit(DELETE_TASK.SUCCESS)
+    commit(DELETE_TASK.SUCCESS, payload)
   } catch (error) {
     commit(DELETE_TASK.FAILED, { error })
   }

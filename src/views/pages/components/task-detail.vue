@@ -105,6 +105,12 @@
             }}</span>
           </v-col>
         </v-container>
+        <v-divider></v-divider>
+        <v-container>
+          <v-btn color="error" class="my-3" block @click="removeTask(task.id)"
+            >Delete</v-btn
+          >
+        </v-container>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -175,7 +181,8 @@ export default {
       'getTaskDetail',
       'updateTask',
       'addComment',
-      'resetAddComment'
+      'resetAddComment',
+      'deleteTask'
     ]),
     formatTime,
     pickColor,
@@ -216,6 +223,10 @@ export default {
           }
         })
       }
+    },
+    removeTask(id) {
+      this.deleteTask({ id })
+      this.isOpen = false
     }
   }
 }
