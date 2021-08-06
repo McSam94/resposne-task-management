@@ -10,6 +10,7 @@
         <label class="mb-3 gray--text">{{ label }}</label>
         <v-spacer></v-spacer>
         <v-btn
+          id="timepicker-btn"
           :class="
             `${hasSelected ? 'black' : 'grey'}--text timepicker__btn md-3`
           "
@@ -19,7 +20,7 @@
         >
       </v-col>
     </template>
-    <v-card>
+    <v-card id="timepicker-card">
       <v-card-title>
         <v-row class="align-center justify-space-between px-3">
           <v-col cols="10">
@@ -33,10 +34,17 @@
         </v-row>
       </v-card-title>
       <v-card-text>
-        <v-time-picker v-model="selectedTime" :min="min" :max="max" />
+        <v-time-picker
+          id="timepicker-native"
+          v-model="selectedTime"
+          :min="min"
+          :max="max"
+        />
       </v-card-text>
       <v-card-actions class="justify-end">
-        <v-btn depressed color="primary" @click="done">Done</v-btn>
+        <v-btn id="timepicker-done" depressed color="primary" @click="done"
+          >Done</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
