@@ -7,7 +7,7 @@
       background-color="secondary"
       height="40"
     >
-      <span class="text-caption">{{
+      <span class="text-subtitle-1">{{
         `${doneProgress}% (${doneTasksCount} of ${allTasksCount})`
       }}</span>
     </v-progress-linear>
