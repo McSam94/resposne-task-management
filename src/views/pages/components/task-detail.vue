@@ -2,7 +2,7 @@
   <v-dialog
     v-model="isOpen"
     content-class="task-detail__dialog"
-    max-width="600"
+    max-width="800"
   >
     <v-card>
       <v-btn
