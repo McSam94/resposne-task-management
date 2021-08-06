@@ -6,7 +6,8 @@ import {
   GET_TASK_DETAIL,
   ADD_COMMENT,
   SEARCH_TASK,
-  UPDATE_STATUS
+  UPDATE_STATUS,
+  UPDATE_STATUS_TASKS
 } from './actions'
 import { searchTask } from '@/utils/task'
 
@@ -154,6 +155,25 @@ export default {
   [UPDATE_STATUS.FAILED]: (state, payload) => {
     state.isUpdatingStatus = false
     state.hasUpdatedStatus = false
+    state.updateStatusError = payload?.error
+  },
+  [UPDATE_STATUS_TASKS.REQUEST]: state => {
+    state.isUpdatingStatusTasks = true
+  },
+  [UPDATE_STATUS_TASKS.SUCCESS]: (state, payload) => {
+    state.isUpdatingStatusTasks = false
+    state.hasUpdatedStatusTasks = true
+    state.tasks = [
+      ...state.tasks?.filter(
+        task =>
+          task.status !== payload?.status && task.id !== payload?.idToRemove
+      ),
+      ...payload?.tasks
+    ]
+  },
+  [UPDATE_STATUS_TASKS.FAILED]: (state, payload) => {
+    state.isUpdatingStatusTasks = false
+    state.hasUpdatedStatusTasks = false
     state.updateStatusError = payload?.error
   }
 }

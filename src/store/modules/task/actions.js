@@ -6,7 +6,8 @@ import {
   editTask,
   removeTask,
   appendComment,
-  editStatus
+  editStatus,
+  updateStatusTasks
 } from '@/services/task'
 
 export const LOAD_TASK = createRequestMutation('LOAD_TASK')
@@ -110,6 +111,23 @@ const updateStatus = async ({ commit }, payload) => {
   }
 }
 
+export const UPDATE_STATUS_TASKS = createRequestMutation('UPDATE_STATUS_TASKS')
+const replaceStatusTasks = async ({ commit }, payload) => {
+  try {
+    commit(UPDATE_STATUS_TASKS.REQUEST)
+
+    await updateStatusTasks(
+      payload?.tasks,
+      payload?.status,
+      payload?.idToRemove
+    )
+
+    commit(UPDATE_STATUS_TASKS.SUCCESS, payload)
+  } catch (error) {
+    commit(UPDATE_STATUS_TASKS.FAILED)
+  }
+}
+
 export default {
   createTask,
   updateTask,
@@ -121,5 +139,6 @@ export default {
   resetAddComment,
   searchTask,
   resetSearch,
-  updateStatus
+  updateStatus,
+  replaceStatusTasks
 }

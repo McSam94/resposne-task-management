@@ -1,11 +1,5 @@
 <template>
-  <v-card
-    ref="taskCard"
-    class="task__card"
-    @click="openTask"
-    @dragstart="startDrag"
-    draggable
-  >
+  <v-card ref="taskCard" class="task__card" @click="openTask">
     <img
       :src="task.images"
       class="task__image"
@@ -39,7 +33,6 @@
 
 <script>
 import { pickColor } from '@/utils/common'
-import Constants from '@/config/constants'
 
 export default {
   name: 'Task',
@@ -49,28 +42,10 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      height: 0
-    }
-  },
-  mounted() {
-    this.height = this.$refs.taskCard.$el.clientHeight
-  },
-  watch: {
-    height(val) {
-      this.$parent.addCardsHeight(val)
-    }
-  },
   methods: {
     pickColor,
     openTask() {
       this.$router.push(`task/${this.task.id}`)
-    },
-    startDrag(e) {
-      e.dataTransfer.dropEffect = 'move'
-      e.dataTransfer.effectAllowed = 'move'
-      e.dataTransfer.setData(Constants.DRAG_ID, this.task.id)
     }
   }
 }

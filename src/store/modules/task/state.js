@@ -38,5 +38,9 @@ export default {
 
   isUpdatingStatus: false,
   hasUpdatedStatus: false,
-  updateStatusError: ''
+  updateStatusError: '',
+
+  isUpdatingStatusTasks: false,
+  hasUpdatedStatusTasks: false,
+  updateStatusTasksError: ''
 }

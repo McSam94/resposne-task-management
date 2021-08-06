@@ -1,14 +1,11 @@
 <template>
-  <v-col
-    class="board mx-3 pa-0 rounded"
-    @drop="onDrop"
-    @dragover.prevent
-    @dragenter.prevent
-  >
+  <v-col class="board mx-3 pa-0 rounded">
     <h3 ref="boardTitle" class="board__title pa-3">{{ title }}</h3>
-    <div class="my-3" v-for="task in tasks" :key="task.id">
-      <Task :ref="`boardTask-${task.id}`" :task="task" />
-    </div>
+    <Draggable v-model="tasks" group="board">
+      <div class="my-3" v-for="task in tasks" :key="task.id">
+        <Task :ref="`boardTask-${task.id}`" :task="task" />
+      </div>
+    </Draggable>
   </v-col>
 </template>
 
@@ -16,12 +13,13 @@
 import { mapActions, mapGetters } from 'vuex'
 import Constants from '@/config/constants'
 import Task from '@/views/pages/components/task'
+import Draggable from 'vuedraggable'
 import lowerCase from 'lodash/lowerCase'
 import capitalize from 'lodash/capitalize'
 
 export default {
   name: 'Board',
-  components: { Task },
+  components: { Task, Draggable },
   props: {
     type: {
       type: Number,
@@ -30,13 +28,8 @@ export default {
   },
   data() {
     return {
-      Constants,
-      titleHeight: 0,
-      cardsHeight: []
+      Constants
     }
-  },
-  mounted() {
-    this.titleHeight = this.$refs.boardTitle.clientHeight
   },
   computed: {
     ...mapGetters(['pendingTasks', 'processingTasks', 'doneTasks']),
@@ -47,24 +40,39 @@ export default {
         )
       )
     },
-    tasks() {
-      return this[`${lowerCase(this.title)}Tasks`]
+    tasks: {
+      get() {
+        return this[`${lowerCase(this.title)}Tasks`]
+      },
+      set(val) {
+        const shouldNotUpdate = val?.every(task => task.status === this.type)
+
+        if (shouldNotUpdate) {
+          return
+        }
+
+        let idToRemove
+        const statusUpdatedTasks = val?.map(task => {
+          if (task.status !== this.type) {
+            idToRemove = task.id
+          }
+          return {
+            ...task,
+            status: this.type
+          }
+        })
+
+        this.replaceStatusTasks({
+          tasks: statusUpdatedTasks,
+          status: this.type,
+          idToRemove
+        })
+      }
     }
   },
   methods: {
-    ...mapActions(['updateStatus']),
-    lowerCase,
-    onDrop(e) {
-      const taskID = e.dataTransfer.getData(Constants.DRAG_ID)
-
-      this.updateStatus({
-        id: taskID,
-        status: this.type
-      })
-    },
-    addCardsHeight(val) {
-      this.cardsHeight = [...this.cardsHeight, val]
-    }
+    ...mapActions(['replaceStatusTasks']),
+    lowerCase
   }
 }
 </script>
@@ -73,8 +81,5 @@ export default {
 .board {
   background-color: #ebecf0;
   border: solid 1px lightgray;
-
-  &__title {
-  }
 }
 </style>

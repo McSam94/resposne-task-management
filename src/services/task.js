@@ -93,3 +93,19 @@ export const editStatus = async (id, status) => {
     console.error(error)
   }
 }
+
+export const updateStatusTasks = async (sortedTasks, status, idToRemove) => {
+  try {
+    const tasks = await getTasks()
+
+    await storeItem(KEY, [
+      ...tasks?.filter(
+        task =>
+          task.status !== status && (idToRemove ? task.id !== idToRemove : true)
+      ),
+      ...sortedTasks
+    ])
+  } catch (error) {
+    console.error(error)
+  }
+}

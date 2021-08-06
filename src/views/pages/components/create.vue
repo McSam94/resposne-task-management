@@ -14,7 +14,7 @@
       <v-card-title>
         <v-row class="align-center justify-space-between">
           <v-col cols="10">
-            <h4>New Task</h4>
+            <h4 id="create-title">New Task</h4>
           </v-col>
           <v-col cols="2" class="justify-center align-center">
             <v-btn icon class="float-right" @click="dialog = false">
@@ -29,12 +29,14 @@
             <v-row>
               <v-col cols="8">
                 <v-text-field
-                  solo
+                  data-test="create-title-field"
                   label="Title"
                   class="create__formfield"
                   v-model="form.title"
                   :rules="rules.title"
+                  single-line
                   required
+                  solo
                 ></v-text-field>
                 <TagPicker
                   cClass="create__formfield"
@@ -81,7 +83,12 @@
           </v-container>
         </v-card-text>
         <v-card-actions class="justify-end px-3">
-          <v-btn color="primary" @click="saveTask" :disabled="!valid">
+          <v-btn
+            id="create-save"
+            color="primary"
+            @click="saveTask"
+            :disabled="!valid"
+          >
             Save
           </v-btn>
         </v-card-actions>
