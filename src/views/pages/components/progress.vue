@@ -1,5 +1,6 @@
 <template>
   <v-row class="px-12 pt-12">
+    <h2 class="grey--text">Progress</h2>
     <v-progress-linear
       class="rounded-pill progress"
       v-model="doneProgress"

@@ -1,7 +1,7 @@
 <template>
   <v-col class="board mx-3 pa-0 rounded">
     <h3 ref="boardTitle" class="board__title pa-3">{{ title }}</h3>
-    <Draggable v-model="tasks" group="board">
+    <Draggable v-model="tasks" group="board" class="board__draggable">
       <div class="my-3" v-for="task in tasks" :key="task.id">
         <Task :ref="`boardTask-${task.id}`" :task="task" />
       </div>
@@ -81,5 +81,9 @@ export default {
 .board {
   background-color: #ebecf0;
   border: solid 1px lightgray;
+
+  &__draggable {
+    min-height: 20rem;
+  }
 }
 </style>
