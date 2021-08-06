@@ -42,18 +42,17 @@
             flat
             solo
           ></v-text-field>
-          <h4 v-else @click="editField('title')">
+          <h3 v-else @click="editField('title')">
             {{ task.title }}
-          </h4>
+          </h3>
           <v-chip
-            small
             v-for="tag of task.tags"
             :key="tag"
             class="mr-1 white--text"
             :color="pickColor(tag)"
             ><v-icon left> mdi-label </v-icon>{{ tag }}</v-chip
           >
-          <div class="text-subtitle-2 gray--text">
+          <div class="text-subtitle-2 gray--text my-3">
             Estimated Time: {{ task.estimatedTime }}
           </div>
         </v-col>
