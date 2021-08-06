@@ -6,11 +6,17 @@
       <Board :type="status" v-for="status of statusList" :key="status" />
       <TaskDetail />
     </v-row>
-    <v-row v-else class="justify-center align-center ma-6 mt-12">
-      <v-img height="400" contain :src="require('@/assets/images/empty.png')" />
-      <div class="grey--text text-h5 font-weight-medium my-3">
-        Seems like there's nothing here. Create a new task now.
-      </div>
+    <v-row v-else class="ma-6 mt-12">
+      <v-col class="justify-center align-center ">
+        <v-img
+          height="400"
+          contain
+          :src="require('@/assets/images/empty.png')"
+        />
+        <div class="grey--text text-h5 font-weight-medium my-3 text-center">
+          Seems like there's nothing here. Create a new task now.
+        </div>
+      </v-col>
     </v-row>
   </v-container>
 </template>
