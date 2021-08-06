@@ -8,7 +8,9 @@
       height="30"
     >
       <span class="text-subtitle-1">{{
-        `${doneProgress}% (${doneTasksCount} of ${allTasksCount})`
+        `${
+          doneProgress === 100 ? '🎉' : '🏃🏼‍♂️'
+        } ${doneProgress}% (${doneTasksCount} of ${allTasksCount})`
       }}</span>
     </v-progress-linear>
   </v-row>
