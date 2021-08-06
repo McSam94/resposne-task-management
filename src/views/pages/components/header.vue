@@ -85,7 +85,6 @@ export default {
       // wait for transition
       setTimeout(() => {
         this.$refs.searchBox.focus()
-        this.$refs.form
       })
     },
     onSearchBlur() {

@@ -4,7 +4,7 @@ import TimePicker from '../time-picker.vue'
 import Vue from 'vue'
 
 describe('TimePicker', () => {
-  let wrapper, actions
+  let wrapper
 
   beforeEach(() => {
     const localVue = createLocalVue()
