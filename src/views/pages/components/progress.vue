@@ -1,7 +1,7 @@
 <template>
   <v-row class="px-12 pt-12">
     <v-progress-linear
-      class="rounded-pill"
+      class="rounded-pill progress"
       v-model="doneProgress"
       background-color="secondary"
       height="20"
@@ -22,4 +22,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.progress {
+  pointer-events: none;
+}
+</style>

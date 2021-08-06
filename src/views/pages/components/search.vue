@@ -96,7 +96,8 @@ export default {
       type: Boolean,
       required: true
     },
-    clickOutside: Object
+    clickOutside: Object,
+    value: Object
   },
   model: {
     prop: 'value',
@@ -114,6 +115,11 @@ export default {
         tags: [],
         status: []
       }
+    }
+  },
+  watch: {
+    value(val) {
+      this.form = val
     }
   },
   mounted() {

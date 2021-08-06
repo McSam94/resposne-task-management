@@ -17,7 +17,7 @@
         <v-text-field
           placeholder="Search"
           class="included"
-          v-model="form.keywords"
+          v-model="searchInfo"
           :append-icon="shouldFilter ? 'mdi-close' : 'mdi-magnify'"
           @click:append="onReset"
           @click.stop="!shouldFilter"
@@ -43,6 +43,7 @@
 <script>
 import Create from '@/views/pages/components/create'
 import SearchBox from '@/views/pages/components/search'
+import _isArray from 'lodash/isArray'
 import { mapActions, mapState } from 'vuex'
 
 export default {
@@ -63,7 +64,19 @@ export default {
   computed: {
     ...mapState({
       shouldFilter: state => state.task.shouldFilter
-    })
+    }),
+    searchInfo() {
+      const totalFilterCount = Object.values(this.form).reduce(
+        (filterCount, value) => {
+          const isEmpty = _isArray(value) ? value.length === 0 : !value
+          const count = filterCount + (isEmpty ? 0 : 1)
+          return count
+        },
+        0
+      )
+
+      return totalFilterCount ? `${totalFilterCount} filters applied` : ''
+    }
   },
   methods: {
     ...mapActions(['resetSearch']),
@@ -89,7 +102,9 @@ export default {
       this.resetSearch()
     },
     include() {
-      const selectDropdown = document.querySelector('.v-menu__content')
+      const selectDropdown = document.querySelector(
+        '.menuable__content__active'
+      )
       const dialog = document.querySelector('.v-dialog__content--active')
 
       return [

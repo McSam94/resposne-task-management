@@ -163,10 +163,20 @@ export default {
       'resetDeleteTag'
     ]),
     async saveTask() {
-      await this.createTask({ task: this.form })
+      await this.createTask({ task: { ...this.form, id: genUUID() } })
       this.loadTask()
       this.dialog = false
       this.$refs.form.reset()
+      this.form = {
+        id: '',
+        title: '',
+        description: '',
+        estimatedTime: '',
+        images: '',
+        status: 0,
+        tags: [],
+        comments: []
+      }
       this.$refs.imageUploader.removeImage()
     },
     filter(item, queryText, itemText) {
