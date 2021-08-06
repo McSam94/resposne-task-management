@@ -30,7 +30,7 @@
               <v-col cols="8">
                 <v-text-field
                   data-test="create-title-field"
-                  label="Title"
+                  label="Title*"
                   class="create__formfield"
                   v-model="form.title"
                   :rules="rules.title"
@@ -67,9 +67,10 @@
                   class="create__formfield"
                   v-model="form.status"
                   :items="statusOptions"
+                  :rules="rules.status"
                   item-text="text"
                   item-value="value"
-                  label="Status"
+                  label="Status*"
                   hide-details
                   solo
                 ></v-select>
@@ -126,7 +127,12 @@ export default {
         comments: []
       },
       rules: {
-        title: [v => !!v || 'Title is required']
+        title: [v => !!v || 'Title is required'],
+        status: [
+          v =>
+            Object.values(Constants.TASK_STATUS).includes(v) ||
+            'Status is required'
+        ]
       },
       COMBOBOX_PLACEHOLDER
     }

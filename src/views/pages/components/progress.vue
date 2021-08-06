@@ -5,7 +5,7 @@
       class="rounded-pill progress"
       v-model="doneProgress"
       background-color="secondary"
-      height="40"
+      height="30"
     >
       <span class="text-subtitle-1">{{
         `${doneProgress}% (${doneTasksCount} of ${allTasksCount})`

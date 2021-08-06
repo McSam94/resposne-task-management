@@ -1,16 +1,22 @@
 <template>
   <v-container fluid class="pa-0">
     <Header />
-    <Progress />
-    <v-row class="px-12 py-12 justify-space-between">
+    <Progress v-if="allTasksCount" />
+    <v-row v-if="allTasksCount" class="px-12 py-12 justify-space-between">
       <Board :type="status" v-for="status of statusList" :key="status" />
       <TaskDetail />
+    </v-row>
+    <v-row v-else class="justify-center align-center ma-6 mt-12">
+      <v-img height="400" contain :src="require('@/assets/images/empty.png')" />
+      <div class="grey--text text-h5 font-weight-medium my-3">
+        Seems like there's nothing here. Create a new task now.
+      </div>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Header from '@/views/pages/components/header'
 import Board from '@/views/pages/components/board'
 import TaskDetail from '@/views/pages/components/task-detail'
@@ -28,6 +34,7 @@ export default {
     this.loadTask()
   },
   computed: {
+    ...mapGetters(['allTasksCount']),
     statusList() {
       return Object.values(Constants.TASK_STATUS)
     }
@@ -38,11 +45,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.board {
-  &__wrapper {
-    display: flex;
-    flex: 4;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
